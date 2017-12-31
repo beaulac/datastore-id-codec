@@ -1,0 +1,36 @@
+{
+  "name": "datastore-id-codec",
+  "version": "0.0.1",
+  "description": "Utility to encode datastore IDs into shorter representations.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "dsIdCodec": "cli.js"
+  },
+  "scripts": {
+    "prepublishOnly": "npm run build",
+    "build": "tsc",
+    "test": "mocha"
+  },
+  "author": "Antoine Beauvais-Lacasse <antoine.beaulac@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "base32.js": "beaulac/base32.js#master",
+    "debug": "^3.1.0",
+    "intexp": "beaulac/node-intexp#master"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.0.1",
+    "@types/debug": "0.0.30",
+    "@types/google-cloud__datastore": "^1.1.0",
+    "@types/mocha": "^2.2.41",
+    "@types/node": "*",
+    "@types/urlsafe-base64": "^1.0.28",
+    "chai": "^4.1.0",
+    "mocha": "^4.1.0",
+    "source-map-support": "^0.5.0",
+    "ts-node": "^4.1.0",
+    "tslint": "^5.5.0",
+    "typescript": "^2.6.2"
+  }
+}
