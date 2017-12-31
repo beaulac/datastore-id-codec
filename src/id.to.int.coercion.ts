@@ -1,8 +1,8 @@
 import { DatastoreInt, PathElement } from '@google-cloud/datastore/entity';
 import * as debug from 'debug';
 import { DsIdCoercer } from './DsIdCoercer';
-const _DEBUG = debug('datastore-id-codec');
 
+const _DEBUG = debug('datastore-id-codec');
 
 export const intCoercer: DsIdCoercer<number> = { coerce };
 export default intCoercer;
@@ -11,7 +11,6 @@ export default intCoercer;
 function coerce(datastoreId: PathElement = ''): number {
     if (isValidNumericId(datastoreId)) {
         return datastoreId;
-
     }
 
     datastoreId = coerceDsIntToIntStr(datastoreId);
@@ -20,11 +19,10 @@ function coerce(datastoreId: PathElement = ''): number {
         if (isValidNumericId(result)) {
             return result;
         }
-
     }
+
     _DEBUG(`Invalid DS ID: ${datastoreId}`);
     throw Error('Invalid Datastore ID');
-
 }
 
 function isValidIdString(intstr: PathElement): intstr is string {
@@ -32,7 +30,7 @@ function isValidIdString(intstr: PathElement): intstr is string {
 }
 
 function isValidNumericId(id: PathElement): id is number {
-    return (id > 0) && (id < Number.MAX_SAFE_INTEGER);
+    return (id > 0) && Number.isSafeInteger(id as number);
 }
 
 function coerceDsIntToIntStr(datastoreInt: DatastoreInt | string = ''): string {

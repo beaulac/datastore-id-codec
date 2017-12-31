@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 'use strict';
-const idCodec = require('.');
+const idCodec = require('.').base32;
 const argv = process.argv;
 
 const id = argv.pop();
