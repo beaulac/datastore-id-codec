@@ -2,10 +2,8 @@ import { DatastoreInt, PathElement } from '@google-cloud/datastore/entity';
 import * as debug from 'debug';
 import { DsIdCoercer } from './DsIdCoercer';
 
-
 export const intCoercer: DsIdCoercer<number> = { coerce };
 export default intCoercer;
-
 
 function coerce(datastoreId: PathElement = ''): number {
     if (isValidNumericId(datastoreId)) {

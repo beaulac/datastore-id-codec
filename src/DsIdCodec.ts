@@ -8,11 +8,11 @@ export class DsIdCodec<Encoded, I extends PathElement = PathElement> implements 
                 private codec: IdCodec<I, Encoded>) {
     }
 
-    encode(dsId: PathElement): Encoded {
+    public encode(dsId: PathElement): Encoded {
         return this.codec.encode(this.coercer.coerce(dsId));
     }
 
-    decode(encodedId: Encoded): I {
+    public decode(encodedId: Encoded): I {
         return this.codec.decode(encodedId);
     }
 

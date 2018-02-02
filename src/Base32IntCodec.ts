@@ -5,20 +5,20 @@ import { IdCodec } from './IdCodec';
 
 const encoderOptions: EncoderOptions = { type: 'crockford', lc: false };
 
-const MAX_UINT_16 = 0xFFFF
-    , uint16EncodedSize = 2 + 1;
+const MAX_UINT_16 = 0xFFFF;
+const uint16EncodedSize = 2 + 1;
 
-const MAX_UINT_32 = 0xFFFFFFFF
-    , uint32EncodedSize = 4 + 1;
+const MAX_UINT_32 = 0xFFFFFFFF;
+const uint32EncodedSize = 4 + 1;
 
 export class Base32IntCodec implements IdCodec<number, string> {
 
-    options: EncoderOptions;
+    public options: EncoderOptions;
 
     constructor(options: EncoderOptions = {}) {
         this.options = {
             ...encoderOptions,
-            ...options
+            ...options,
         };
     }
 
