@@ -2,4 +2,4 @@
 --require ts-node/register
 --timeout 1s
 --slow 25
-test/*test.ts
+test/*test.*
