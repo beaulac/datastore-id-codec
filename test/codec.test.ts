@@ -1,5 +1,5 @@
 import * as assert from 'assert';
-import codec from '../src';
+import codec, { dsIdToBuffer } from '../src';
 
 function validRepresentationsOf(int: number) {
     return [int, `${int}`, { value: `${int}` }];
@@ -13,7 +13,7 @@ describe('base32 DS ID codec', function () {
         const value = Math.floor(Math.random() * 10000) * Math.pow(2, exponent);
 
         validRepresentationsOf(value).forEach(
-            v => assert.strictEqual(codec.decode(codec.encode(v)), value)
+            v => assert.strictEqual(codec.decode(codec.encode(v)), value),
         );
     });
 
@@ -24,7 +24,7 @@ describe('base32 DS ID codec', function () {
             fixtures.forEach(
                 ([input, encoded]) => {
                     assert.strictEqual(codec.encode(input), encoded);
-                }
+                },
             );
         });
 
@@ -46,7 +46,7 @@ describe('base32 DS ID codec', function () {
                     assert.strictEqual(e.message, 'Invalid Datastore ID');
                 }
             });
-            
+
             it('throws error for odd value', function () {
                 try {
                     codec.encode(33333333333);
@@ -65,7 +65,7 @@ describe('base32 DS ID codec', function () {
             fixtures.forEach(
                 ([encoded, decoded]) => {
                     assert.strictEqual(codec.decode(encoded), decoded);
-                }
+                },
             );
         });
 
@@ -89,6 +89,19 @@ describe('base32 DS ID codec', function () {
                     assert.strictEqual(e.message, `Invalid encoded DS ID: ${invalidId}`);
                 }
             });
+        });
+
+    });
+
+    describe('converting ID to buffer', function () {
+
+        it('returns expected value', function () {
+            const expected = Buffer.from([0x01, 0x00, 0x0b]);
+            const actual = dsIdToBuffer(2048);
+            assert.strictEqual(
+                Buffer.compare(actual, expected),
+                0,
+            );
         });
 
     });

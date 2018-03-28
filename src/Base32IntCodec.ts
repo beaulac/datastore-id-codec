@@ -1,15 +1,9 @@
 import * as base32 from 'base32.js';
 import { EncoderOptions } from 'base32.js';
-import { intexp } from 'intexp';
 import { IdCodec } from './IdCodec';
+import { toBuffer, uint16EncodedSize, uint32EncodedSize } from './int-buffer';
 
 const encoderOptions: EncoderOptions = { type: 'crockford', lc: false };
-
-const MAX_UINT_16 = 0xFFFF;
-const uint16EncodedSize = 2 + 1;
-
-const MAX_UINT_32 = 0xFFFFFFFF;
-const uint32EncodedSize = 4 + 1;
 
 export class Base32IntCodec implements IdCodec<number, string> {
 
@@ -33,21 +27,7 @@ export class Base32IntCodec implements IdCodec<number, string> {
      * @returns {string}
      */
     public encode(id: number): string {
-        const [coefficient, exponent] = intexp(id);
-        if (coefficient > MAX_UINT_32) {
-            throw Error('DS ID is not divisible enough');
-        }
-
-        let buf;
-        if (coefficient < MAX_UINT_16) {
-            buf = Buffer.allocUnsafe(uint16EncodedSize);
-            buf.writeUInt16LE(coefficient, 0);
-        } else {
-            buf = Buffer.allocUnsafe(uint32EncodedSize);
-            buf.writeUInt32LE(coefficient, 0);
-        }
-
-        buf.writeUInt8(exponent, buf.length - 1);
+        const buf = toBuffer(id);
 
         return base32.encode(buf, this.options);
     }
